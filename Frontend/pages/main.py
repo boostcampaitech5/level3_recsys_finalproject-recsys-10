@@ -35,7 +35,11 @@ def main():
         with col:
             thumbnail = thumbnail_decoder(mongodb.load_thumbnail(thumbnail_id))
             st.image(thumbnail, use_column_width=True)
-            st.text(mongodb.load_title(thumbnail_id))
+            title = mongodb.load_title(thumbnail_id)
+            if len(title) > 19:
+                title = title[:19] + ".."  # 텍스트 길이 제한
+            st.text(title)
+            # st.text(mongodb.load_title(thumbnail_id))
             box_col_01, box_col_02 = st.columns(2)
             with box_col_01:
                 box_good_button = st.button('좋아요', key=f"box_good_{thumbnail_id}", use_container_width=True)
