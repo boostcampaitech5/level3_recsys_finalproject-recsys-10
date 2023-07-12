@@ -25,4 +25,14 @@ class MongoDB_cls:
             return True
         return False
 
-    # def register(self, )
+    def load_thumbnail(self, recipeid:int) -> str:
+        collection = self.get_collection('recipe_app_db', 'thumbnail_data')
+        reciped_data = collection.find_one({"recipeid": recipeid})
+        recipeid_thumbnail = reciped_data['thumb_link']
+        return recipeid_thumbnail
+    
+    def load_title(self, recipeid:int) -> str:
+        collection = self.get_collection('recipe_app_db', 'ingresync_recipe_data')
+        reciped_data = collection.find_one({"recipeid": recipeid})
+        recipeid_title = reciped_data['title']
+        return recipeid_title
