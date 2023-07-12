@@ -3,7 +3,7 @@ from streamlit_extras.switch_page_button import switch_page
 from src.mongodb_cls import MongoDB_cls
 
 def login_page():
-    st.title("로그인")
+    #st.title("로그인")
     with st.form(key="입력 form"):
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
