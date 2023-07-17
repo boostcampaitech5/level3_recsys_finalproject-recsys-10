@@ -12,9 +12,12 @@ def recipe_info():
     with open(os.path.join(os.getcwd(), 'style.css')) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
         
-    want_to_contribute = st.button("< 뒤로 가기")
-    if want_to_contribute:
-        switch_page("main")
+    want_to_back = st.button("< 뒤로 가기")
+    if want_to_back:
+        if st.session_state.load_recipe_info_nav_main:
+            switch_page("main")
+        else:
+            switch_page("book_mark")
         
     st.sidebar.title("오늘의 레시피")
     try:
