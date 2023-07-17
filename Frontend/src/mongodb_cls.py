@@ -85,3 +85,18 @@ class MongoDB_cls:
         reciped_data = collection.find_one({"recipeid": recipeid})
         recipeid_title = reciped_data['title']
         return recipeid_title
+    
+    def load_recipe_info(self, recipeid:int) -> tuple:
+        """
+        Retrieves the recipe information associated with the given recipe ID.
+        Args:
+            recipeid (int): The ID of the recipe.
+        Returns:
+            tuple: A tuple containing ingredients, ingredient_quantity, and process.
+        """
+        collection = self.get_collection('recipe_app_db', 'ingresync_recipe_data')
+        reciped_data = collection.find_one({"recipeid": recipeid})
+        ingredients = reciped_data['ingredients']
+        ingredient_quantity = reciped_data['ingredient_quantity']
+        process = reciped_data['process']
+        return ingredients, ingredient_quantity, process
