@@ -100,3 +100,17 @@ class MongoDB_cls:
         ingredient_quantity = reciped_data['ingredient_quantity']
         process = reciped_data['process']
         return ingredients, ingredient_quantity, process
+    
+    def load_user_favorite_food_list(self, username: str) -> str:
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        user = collection.find_one({"username": username})
+        favorite_food_list = user['favorite_food']
+        return favorite_food_list
+    
+
+    def update_user_favorite_food_list(self, username: str, favorite_food_list: list):
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        user_data = collection.find_one({"username": username})
+        user_data["favorite_food"] = str(favorite_food_list)
+        filter = {"username": username}
+        collection.replace_one(filter, user_data)
