@@ -13,8 +13,8 @@ def register(username, password, thumbnail_ids, check_list) -> bool:
     if existing_user:
         st.error("이미 존재하는 사용자입니다.")
         return False
-    if sum(check_list) < 5:
-        st.error(f"선호 메뉴를 5가지 이상 선택해주세요 [{sum(check_list)}개 선택]")
+    if sum(check_list) < 10:
+        st.error(f"선호 메뉴를 10가지 이상 선택해주세요 [{sum(check_list)}개 선택]")
         return False
     
     result = [thumbnail_ids[i] for i in range(len(thumbnail_ids)) if check_list[i]]

@@ -26,7 +26,7 @@ def register_page():
         new_username = st.text_input("Username")
         new_password = st.text_input("Password", type="password")
         st.markdown('---')
-        st.subheader('선호하는 음식을 선택하세요 [5개 이상]')
+        st.subheader('선호하는 음식을 선택하세요 [10개 이상]')
         st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
 
 
