@@ -107,10 +107,23 @@ class MongoDB_cls:
         favorite_food_list = user['favorite_food']
         return favorite_food_list
     
-
     def update_user_favorite_food_list(self, username: str, favorite_food_list: list):
         collection = self.get_collection('recipe_app_db', 'user_login_db')
         user_data = collection.find_one({"username": username})
         user_data["favorite_food"] = str(favorite_food_list)
         filter = {"username": username}
         collection.replace_one(filter, user_data)
+
+    def load_category_idx_to_recipeid(self, cate_list: list) -> list:
+        collection = self.get_collection('recipe_app_db', 'category_idx_data')
+        cursor = collection.find({
+            #"cat1": cate_list[0],
+            "cat2": cate_list[1],
+            "cat3": cate_list[2],
+            "cat4": cate_list[3],
+        })
+        try:
+            output = [document['recipeid'] for document in cursor]
+        except:
+            output = []
+        return output
