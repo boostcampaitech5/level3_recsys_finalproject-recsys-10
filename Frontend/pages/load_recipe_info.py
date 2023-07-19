@@ -47,7 +47,7 @@ def recipe_info():
     ingredient_data2 = {"재료": ingredients_list[half_length:], "용량": ingredient_quantity_list[half_length:]}
 
 
-    st.header(title)
+    st.header(':notebook_with_decorative_cover: '+title)
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
     cols = st.columns([1, 2])
     with cols[0]:

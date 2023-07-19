@@ -29,7 +29,7 @@ def bookmark_page():
     if want_to_contribute:
         switch_page("streamlit_app")
 
-    st.header(f'{st.session_state.key}님이 좋아하는 레시피')
+    st.header(f':pushpin: {st.session_state.key}님이 좋아하는 레시피')
     st.markdown("---")
 
 
@@ -54,9 +54,9 @@ def bookmark_page():
                 if len(favorite_food_list)>5:
                     toggle_state = st.session_state.get(f"toggle_{thumbnail_id}", thumbnail_id in favorite_food_list)
                     if toggle_state:
-                        button_text = '취소'
+                        button_text = ':heart:' #취소
                     else:
-                        button_text = '좋아요'
+                        button_text = ':white_heart:' #좋아요
                     if st.button(button_text, key=f"box_good_{thumbnail_id}", use_container_width=True):
                         st.session_state[f"toggle_{thumbnail_id}"] = not toggle_state
                         if st.session_state[f"toggle_{thumbnail_id}"]:
