@@ -16,7 +16,10 @@ mongodb = MongoDB_cls()
 def main():
     st.session_state.load_recipe_info_nav_main = True
     #mongodb = MongoDB_cls()
-    favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
+    try:
+        favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
+    except:
+        switch_page("streamlit_app")
     favorite_food_list = ast.literal_eval(favorite_food_list)
 
     st.sidebar.title("오늘의 레시피")
@@ -29,6 +32,8 @@ def main():
     if want_to_contribute:
         switch_page("streamlit_app")
 
+    # 로고로 변경하기
+    st.title("오늘의 레시피")
     st.header(f':star: {st.session_state.key}님을 위한 레시피 추천')
 
     col_1, col_2 = st.columns([4,1])
