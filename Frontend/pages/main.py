@@ -11,6 +11,8 @@ from src.thumbnail_decoder import thumbnail_decoder
 with open(os.path.join(os.getcwd(), 'style.css')) as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
+st.image(os.path.join(os.getcwd(), 'img/logo.png'), use_column_width=True)
+
 mongodb = MongoDB_cls()
 
 def main():
@@ -20,7 +22,7 @@ def main():
         favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
     except:
         switch_page("streamlit_app")
-    favorite_food_list = ast.literal_eval(favorite_food_list)
+    #favorite_food_list = ast.literal_eval(favorite_food_list)
 
     st.sidebar.title("오늘의 레시피")
     try:
@@ -32,8 +34,7 @@ def main():
     if want_to_contribute:
         switch_page("streamlit_app")
 
-    # 로고로 변경하기
-    st.title("오늘의 레시피")
+
     st.header(f':star: {st.session_state.key}님을 위한 레시피 추천')
 
     col_1, col_2 = st.columns([4,1])
@@ -68,11 +69,9 @@ def main():
     # When the button is clicked, display the text entered by the user.
     if button_clicked & (text != ''):
         st.session_state.text = text
-        # FastAPI 서버의 URL
         url = "http://115.85.182.72:30006/recommend"
-        # 요청 본문
         data = {"text": text}
-        # POST 요청을 보냅니다.
+        # POST request
         response = requests.post(url, json=data)
         recommend_list = mongodb.load_category_idx_to_recipeid(list(response.json()))
         # To shuffle this list:
@@ -80,26 +79,38 @@ def main():
         recommend_list = recommend_list[:5]
         if len(recommend_list) == 0:
             st.warning("일치하는 추천메뉴가 없어요. 다른 말로 다시 입력해주세요")
-        # else:
         st.session_state.recommend_list = recommend_list
+    display_thumbnails(recommend_list, favorite_food_list, 'kobert')
 
-
-    display_thumbnails(recommend_list, favorite_food_list)
  
 
 
-    st.subheader('🤖 AI가 추천하는 메뉴')
+    st.header('🤖 AI가 추천하는 레시피')
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
+    
+    # -------------- catboost model -------------- #
+    url_catboost = "http://115.85.182.72:30006/recommend_category"
+    data_catboost = {"li": str(mongodb.load_user_category_onehot_list(st.session_state.key))}
+    # POST request
+    response_catboost = requests.post(url_catboost, json=data_catboost)
+    catboost_recommend_list = ast.literal_eval(response_catboost.json())
+    st.subheader('🌕 좋아하는 음식들의 카테고리 상호작용 데이터로 추천해드려요')
+    st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
+    display_thumbnails(catboost_recommend_list, favorite_food_list, 'catboost')
+    # --------------------------------------------- #
 
+
+    st.subheader('Test 고정값')
+    st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
     # ----- 나중에 모델 아웃풋 리스트 들어갈 곳 ----- #
     thumbnail_ids = [6891816, 6843136, 7002443, 6996297, 6885909,
                      6915088, 6897374, 6933760, 6846168, 6881099]
     # --------------------------------------- #
     
-    display_thumbnails(thumbnail_ids, favorite_food_list)
+    display_thumbnails(thumbnail_ids, favorite_food_list, 'test')
           
 
-def display_thumbnails(thumbnail_ids, favorite_food_list):
+def display_thumbnails(thumbnail_ids, favorite_food_list, unique_str):
     # mongodb = MongoDB_cls()
     cols = st.columns(5)
     box_good_buttons = []
@@ -124,24 +135,26 @@ def display_thumbnails(thumbnail_ids, favorite_food_list):
                 else:
                     button_text = ':white_heart:' #👍✅♡
 
-                if st.button(button_text, key=f"box_good_{thumbnail_id}", use_container_width=True):
+                if st.button(button_text, key=f"box_good_{thumbnail_id}{unique_str}", use_container_width=True):
                     st.session_state[f"toggle_{thumbnail_id}"] = not toggle_state
                     if st.session_state[f"toggle_{thumbnail_id}"]:
                         if thumbnail_id not in favorite_food_list:
                             favorite_food_list.append(thumbnail_id)
                             st.session_state.recipe_id = thumbnail_id
                             mongodb.update_user_favorite_food_list(st.session_state.key, favorite_food_list)
+                            mongodb.add_category_onehot(st.session_state.key, thumbnail_id)
                             switch_page("main_reset")
                     else:
                         if thumbnail_id in favorite_food_list:
                             favorite_food_list.remove(thumbnail_id)
                             mongodb.update_user_favorite_food_list(st.session_state.key, favorite_food_list)
+                            mongodb.sub_category_onehot(st.session_state.key, thumbnail_id)
                             switch_page("main_reset")
 
                 box_good_buttons.append(toggle_state)
 
             with box_col_02:
-                box_move_button = st.button('자세히', key=f"box_move_{thumbnail_id}", use_container_width=True)
+                box_move_button = st.button('자세히', key=f"box_move_{thumbnail_id}{unique_str}", use_container_width=True)
                 box_move_buttons.append(box_move_button)
         if i % 5 == 4:
             st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
