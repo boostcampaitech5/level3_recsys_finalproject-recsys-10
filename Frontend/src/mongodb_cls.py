@@ -1,5 +1,7 @@
 import yaml
+import ast
 import urllib.parse
+import numpy as np
 from pymongo import MongoClient
 
 class MongoDB_cls:
@@ -101,10 +103,11 @@ class MongoDB_cls:
         process = reciped_data['process']
         return ingredients, ingredient_quantity, process
     
-    def load_user_favorite_food_list(self, username: str) -> str:
+    def load_user_favorite_food_list(self, username: str) -> list:
         collection = self.get_collection('recipe_app_db', 'user_login_db')
         user = collection.find_one({"username": username})
         favorite_food_list = user['favorite_food']
+        favorite_food_list = ast.literal_eval(favorite_food_list)
         return favorite_food_list
     
     def update_user_favorite_food_list(self, username: str, favorite_food_list: list):
@@ -128,6 +131,8 @@ class MongoDB_cls:
             output = []
         return output
     
+    # ------------------------------------------------------------------------------- #
+
     def load_all_user_list(self) -> str:
         collection = self.get_collection('recipe_app_db', 'user_login_db')
         cursor = collection.find({})
@@ -136,3 +141,38 @@ class MongoDB_cls:
         except:
             output = []
         return output
+    
+    def load_user_category_onehot_list(self, username: str) -> list:
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        user = collection.find_one({"username": username})
+        favorite_food_list = user['favorite_category']
+        favorite_food_list = ast.literal_eval(favorite_food_list)
+        return favorite_food_list
+
+    def load_category_onehot_list(self, recipeid:int) -> list:
+        collection = self.get_collection('recipe_app_db', 'category_onehot_data')
+        onehot_list = collection.find_one({"recipeid": recipeid})
+        onehot_list = onehot_list['category_list']
+        onehot_list = ast.literal_eval(onehot_list)
+        return onehot_list
+
+    def add_category_onehot(self, username: str, recipeid:int):
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        user_data = collection.find_one({"username": username})
+        origin_onehot_np = np.array(ast.literal_eval(user_data["favorite_category"]))
+        onehot_np = np.array(self.load_category_onehot_list(recipeid))
+        result = origin_onehot_np + onehot_np
+        user_data["favorite_category"] = str(list(result))
+        filter = {"username": username}
+        collection.replace_one(filter, user_data)
+
+
+    def sub_category_onehot(self, username: str, recipeid:int):
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        user_data = collection.find_one({"username": username})
+        origin_onehot_np = np.array(ast.literal_eval(user_data["favorite_category"]))
+        onehot_np = np.array(self.load_category_onehot_list(recipeid))
+        result = origin_onehot_np - onehot_np
+        user_data["favorite_category"] = str(list(result))
+        filter = {"username": username}
+        collection.replace_one(filter, user_data)
