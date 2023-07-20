@@ -127,3 +127,12 @@ class MongoDB_cls:
         except:
             output = []
         return output
+    
+    def load_all_user_list(self) -> str:
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        cursor = collection.find({})
+        try:
+            output = [document['username'] for document in cursor]
+        except:
+            output = []
+        return output
