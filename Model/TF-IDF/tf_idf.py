@@ -50,7 +50,7 @@ def recommend_recipes_ingre(my_id, num_recom = 10):
     related_recipe_indices = similarity_scores.argsort()[::-1][:num_recom]
     related_recipe_indices = list(set(related_recipe_indices) - set(my_id))
     related_recipes = recipe.iloc[related_recipe_indices]
-    return related_recipes
+    return related_recipes['recipeid'].to_list()
 
 if __name__=="__main__":
     # my_id = 'test'
@@ -60,4 +60,4 @@ if __name__=="__main__":
     my_recipeids = [221097]
 
     recom = recommend_recipes_ingre(my_recipeids, num_recom = 10)
-    print(recom['recipeid'].to_list())
+    print(recom)
