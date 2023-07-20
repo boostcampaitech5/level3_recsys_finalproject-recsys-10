@@ -1,5 +1,5 @@
 import os
-import ast
+# import ast
 import streamlit as st
 
 from streamlit_extras.switch_page_button import switch_page
@@ -13,7 +13,7 @@ def bookmark_page():
     st.session_state.load_recipe_info_nav_main = False
     mongodb = MongoDB_cls()
     favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
-    favorite_food_list = ast.literal_eval(favorite_food_list)
+    # favorite_food_list = ast.literal_eval(favorite_food_list)
 
     want_to_contribute = st.button("< 뒤로 가기")
     if want_to_contribute:
@@ -40,6 +40,8 @@ def bookmark_page():
     box_move_buttons = []
     result, box_good_result = [False], [False]
 
+    bookmark_limit = 10
+
     for i, thumbnail_id in enumerate(thumbnail_ids):
         col = cols[i%5]
         with col:
@@ -51,7 +53,7 @@ def bookmark_page():
             st.text(title)
             box_col_01, box_col_02 = st.columns(2)
             with box_col_01:
-                if len(favorite_food_list)>5:
+                if len(favorite_food_list)>bookmark_limit:
                     toggle_state = st.session_state.get(f"toggle_{thumbnail_id}", thumbnail_id in favorite_food_list)
                     if toggle_state:
                         button_text = ':heart:' #취소
@@ -64,11 +66,13 @@ def bookmark_page():
                                 favorite_food_list.append(thumbnail_id)
                                 st.session_state.recipe_id = thumbnail_id
                                 mongodb.update_user_favorite_food_list(st.session_state.key, favorite_food_list)
+                                mongodb.add_category_onehot(st.session_state.key, thumbnail_id)
                                 switch_page("book_mark_reset")
                         else:
                             if thumbnail_id in favorite_food_list:
                                 favorite_food_list.remove(thumbnail_id)
                                 mongodb.update_user_favorite_food_list(st.session_state.key, favorite_food_list)
+                                mongodb.sub_category_onehot(st.session_state.key, thumbnail_id)
                                 switch_page("book_mark_reset")
                     box_good_buttons.append(toggle_state)
 
