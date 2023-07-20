@@ -35,6 +35,8 @@ def register_page():
             config = yaml.safe_load(config_file)
         thumbnail_ids = config['register_page_item_list_cat3']
         thumbnail_ids.extend(config['register_page_item_list_cat4'])
+        thumbnail_ids = list(set(thumbnail_ids))
+        
         cols = st.columns(5)
         checkboxes = []
         for i, thumbnail_id in enumerate(thumbnail_ids):
