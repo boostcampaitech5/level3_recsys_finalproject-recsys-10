@@ -1,3 +1,4 @@
+import numpy as np
 import streamlit as st
 from src.mongodb_cls import MongoDB_cls
 
@@ -18,11 +19,17 @@ def register(username, password, thumbnail_ids, check_list) -> bool:
         return False
     
     result = [thumbnail_ids[i] for i in range(len(thumbnail_ids)) if check_list[i]]
-
+    
+    cate_result = np.zeros(61, dtype=int)
+    for cate_batch in result:
+        cate_result += np.array(mongodb.load_category_onehot_list(cate_batch))
+    cate_result = list(cate_result)
+    
     # create a new user
     user = {
         "username": username,
         "password": password,
+        "favorite_category": str(cate_result),
         "favorite_food": str(result)
     }
     collection.insert_one(user)
