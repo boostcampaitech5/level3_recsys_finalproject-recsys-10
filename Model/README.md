@@ -22,11 +22,17 @@ ultragcn_main 모듈을 임포트하고,
 
 3. 인자로 넘겨줘야 하는 값은 5개이다. 5개의 인자를 주는데 순서대로 다음과 같다.
 
+
 csv_path : csv 파일의 경로이다. 이 csv 파일은 sequence_final.csv 파일의 형식의 형태로 제공되어야한다.
+
 train_file_path : train_txt 파일을 저장할 경로이다. (이름 X, 경로만 입력)
+
 test_file_path : test_txt 파일을 저장할 경로이다. (이름 X, 경로만 입력)
+
 User_LM_path : user의 mapping table이 저장된 pickle을 저장할 경로이다. (이름 X, 경로만 입력)
+
 Recipe_LE_path : Recipe의 LabelEncoder가 저장된 pickle을 저장할 경로이다. (이름 X, 경로만 입력)
+
 
 4. 실행 후에는 train_txt 파일과 test_txt 파일이 생성된다. 이는 csv 파일을 통해 생성된 txt 파일이다.
 
@@ -37,12 +43,19 @@ Recipe_LE_path : Recipe의 LabelEncoder가 저장된 pickle을 저장할 경로�
 
 2. 인자로 넘겨줘야 하는 값은 6개이다. 6개의 인자를 주는데 순서대로 다음과 같다.
 
+
 new_user_name_number : 유저의 고유 번호를 int 형태로 넘겨준다.
+
 new_user_preference : 유저가 선호하는 레시피 번호를 list 형태로 넘겨준다.
+
 train_file_path : initialize_dataset 함수로 만들어진 train_txt가 저장된 경로이다.
+
 test_file_path : initialize_dataset 함수로 만들어진 text_txt가 저장된 경로이다.
+
 User_LM_path : initialize_dataset 함수로 만들어진 user mapping table pickle이 저장된 경로이다.
+
 Recipe_LE_path : initialize_dataset 함수로 만들어진 recipe mapping table pickle이 저장된 경로이다.
+
 
 3. 반환 값은 따로 없고, txt 파일들(train_txt, test_txt)이 갱신된다.
 
@@ -62,9 +75,14 @@ Recipe_LE_path : initialize_dataset 함수로 만들어진 recipe mapping table 
 
 2. 인자로 넘겨줘야 하는 값은 4개이다. 4개의 인자를 주는데 순서대로 다음과 같다.
 
+
 user_name_number : 추천 결과를 받고 싶은 유저의 고유 번호를 int 형태로 넘겨준다.
+
 result_file_path : 모델 학습 결과 추천의 결과가 담긴 txt 파일의 경로이다.
+
 User_LM_path : initialize_dataset 함수로 만들어진 user mapping table pickle이 저장된 경로이다.
+
 Recipe_LE_path : initialize_dataset 함수로 만들어진 recipe mapping table pickle이 저장된 경로이다.
+
 
 3. 반환 값은 10개의 추천 레시피로 이루어진 list이다.
