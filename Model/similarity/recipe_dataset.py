@@ -10,6 +10,6 @@ def get_recipe_dataset(path): # 데이터베이스 위치를 입력받으면 레
     except:
         recipe = pd.read_csv(os.path.join(path,'recipe_data_final.csv'))
         recipe['ingredients'] = recipe['ingredients'].apply(lambda x:ast.literal_eval(x))
-        with open(os.path.join(os.path.join(path),'recipe_data.pkl'), 'wb') as f:
+        with open(os.path.join(path,'recipe_data.pkl'), 'wb') as f:
             pickle.dump(recipe, f)
     return recipe
