@@ -19,7 +19,7 @@ import shutil
 import pickle
 import copy
 
-number = 1
+number = 0
 
 def data_param_prepare(config_file):
 
@@ -539,7 +539,7 @@ def test(model, test_loader, test_ground_truth_list, mask, topk, n_user, epoch):
             f.write('\n')
             number += 1
     f.close()
-    number = 1
+    number = 0
 
     X = zip(rating_list, groundTrue_list)
     Recall, Precision, NDCG = 0, 0, 0
@@ -561,11 +561,12 @@ def test(model, test_loader, test_ground_truth_list, mask, topk, n_user, epoch):
 
 #csv파일 경로를 주면, 그 csv파일을 통해 UltraGCN 모델 학습에 필요한 txt파일과 userid, recipeid의 mapping_table을 초기화.
 #csv 파일은 sequence_final.csv 형식이어야 함.
-def initialize_dataset(csv_path):
+def initialize_dataset(csv_path, train_file_path, test_file_path, User_LM_path, Recipe_LE_path):
 
-    #환경에 따라 수정해야할 경로.
-    ultragcn_recipe_train_data_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/data/Ultragcn_Recipe_Data/ultragcn_recipe_train_data.txt'
-    ultragcn_recipe_test_data_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/data/Ultragcn_Recipe_Data/ultragcn_recipe_test_data.txt'
+    ultragcn_recipe_train_data_path = os.path.join(train_file_path, 'ultragcn_recipe_train_data.txt')
+    ultragcn_recipe_test_data_path = os.path.join(test_file_path, 'ultragcn_recipe_test_data.txt')
+    Userid_LM_path = os.path.join(User_LM_path, 'Userid_label_encoder.pickle')
+    Recipeid_LE_path = os.path.join(Recipe_LE_path, 'Recipeid_label_encoder.pkl')
 
     sequence_data = pd.read_csv(csv_path)
 
@@ -584,7 +585,7 @@ def initialize_dataset(csv_path):
     sequence_data['uid'] = userid_LE.transform(sequence_data['uid'])
     user_label_mapping = {label: i for i, label in enumerate(list(sequence_data['uid'].unique()))}
 
-    with open('/opt/ml/Recipe_Project/Recipe_code/ultragcn/Userid_label_encoder.pickle', 'wb') as file:
+    with open(Userid_LM_path, 'wb') as file:
         pickle.dump(user_label_mapping, file)
 
     #recipeid mapping
@@ -593,7 +594,6 @@ def initialize_dataset(csv_path):
     sequence_data['rid'] = recipeid_LE.transform(sequence_data['rid'])
     sequence_data
 
-    Recipeid_LE_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/Recipeid_label_encoder.pkl'
     joblib.dump(recipeid_LE, Recipeid_LE_path)
     
     #train, test txt파일 생성
@@ -617,14 +617,8 @@ def initialize_dataset(csv_path):
 
 
 
-#새로운 유저의 선호 목록을 데이터에 추가하고 유저의 고유 번호 반환
-def recsys_add_user_by_ultragcn(new_user_name_number : int, new_user_preference : list):
-
-    # 폴더 위치에 따라 수정 필요
-    train_file_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/data/Ultragcn_Recipe_Data/ultragcn_recipe_train_data.txt'
-    test_file_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/data/Ultragcn_Recipe_Data/ultragcn_recipe_test_data.txt'
-    User_LM_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/Userid_label_encoder.pickle'
-    Recipe_LE_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/Recipeid_label_encoder.pkl'
+#새로운 유저의 선호 목록을 데이터에 추가
+def recsys_add_user_by_ultragcn(new_user_name_number : int, new_user_preference : list, train_file_path, test_file_path, User_LM_path, Recipe_LE_path):
 
     exist_flag = True
 
@@ -791,10 +785,10 @@ def recsys_train_by_ultragcn(config_file):
 
 
 #유저 고유 번호를 받고 그 유저의 추천 목록 반환
-def recsys_get_recipe_by_ultragcn(user_name_number : int) -> list:
+def recsys_get_recipe_by_ultragcn(user_name_number : int, result_file_path, User_LM_path, Recipe_LE_path) -> list:
 
     #환경에 따라 수정 필요.
-    file_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/RecSys_Result_UltraGCN.txt'
+    result_file_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/RecSys_Result_UltraGCN.txt'
     User_LM_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/Userid_label_encoder.pickle'
     Recipe_LE_path = '/opt/ml/Recipe_Project/Recipe_code/ultragcn/Recipeid_label_encoder.pkl'
 
@@ -806,14 +800,14 @@ def recsys_get_recipe_by_ultragcn(user_name_number : int) -> list:
 
     values = []
 
-    with open(file_path, 'r') as file:
+    with open(result_file_path, 'r') as file:
         for line in file:
             parts = line.split()
             if int(parts[0]) == user_name_number:
                 values = [int(value) for value in parts[1:]]
                 break
 
-    return recipe_LE.inverse_transform(values)
+    return list(recipe_LE.inverse_transform(values))
 
 # 단일 실행 시 단순 학습.
 if __name__ == "__main__":
