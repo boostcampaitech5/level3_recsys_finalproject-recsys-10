@@ -17,12 +17,10 @@ mongodb = MongoDB_cls()
 
 def main():
     st.session_state.load_recipe_info_nav_main = True
-    #mongodb = MongoDB_cls()
     try:
         favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
     except:
         switch_page("streamlit_app")
-    #favorite_food_list = ast.literal_eval(favorite_food_list)
 
     st.sidebar.title("오늘의 레시피")
     try:
@@ -37,10 +35,15 @@ def main():
 
     st.header(f':star: {st.session_state.key}님을 위한 레시피 추천')
 
-    col_1, col_2 = st.columns([4,1])
+    col_1, col_2, col_3 = st.columns([3,1,1])
     with col_1:
         st.empty()
     with col_2:
+        ingredient_link = st.button(":ice_cube: 나만의 냉장고 추천", use_container_width=True)
+        if ingredient_link:
+            switch_page("ingredient_page")
+        st.empty()
+    with col_3:
         bookmark_link = st.button(":pushpin: 좋아하는 레시피", use_container_width=True)
         if bookmark_link:
             switch_page("book_mark")
@@ -48,7 +51,7 @@ def main():
     st.subheader('💡 뭐 먹을 지 고민 된다면 편하게 말해주세요. 추천해드려요')
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
 
-    # 감성분석 추천
+    # ------------------- kobert nlp recommend ------------------- #
     try:
         text = st.session_state.text
         text = st.text_input(' ')
@@ -60,7 +63,6 @@ def main():
         st.write('예시) 술 마실 때 먹기 좋은 국물 요리가 필요해')
     with text_box_cols_2:
         button_clicked = st.button("Submit", use_container_width=True)
-
     try:
         recommend_list = st.session_state.recommend_list
     except:
@@ -69,7 +71,7 @@ def main():
     # When the button is clicked, display the text entered by the user.
     if button_clicked & (text != ''):
         st.session_state.text = text
-        url = "http://115.85.182.72:30006/recommend"
+        url = "http://115.85.182.72:30006/recommend_kobert"
         data = {"text": text}
         # POST request
         response = requests.post(url, json=data)
@@ -81,9 +83,8 @@ def main():
             st.warning("일치하는 추천메뉴가 없어요. 다른 말로 다시 입력해주세요")
         st.session_state.recommend_list = recommend_list
     display_thumbnails(recommend_list, favorite_food_list, 'kobert')
-
+    # ------------------------------------------------------------------- #
  
-
 
     st.header('🤖 AI가 추천하는 레시피')
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
@@ -100,14 +101,27 @@ def main():
     # --------------------------------------------- #
 
 
-    st.subheader('Test 고정값')
+    # -------------- tf-idf model -------------- #
+    url_tfidf = "http://115.85.182.72:30006/recommend_tf_idf"
+    data_tfidf = {"li": str(mongodb.load_user_favorite_food_list(st.session_state.key)[-5:])}
+    # POST request
+    response_tfidf = requests.post(url_tfidf, json=data_tfidf)
+    tfidf_recommend_list = ast.literal_eval(str(response_tfidf.json()))
+    st.subheader('🌕 자주 먹는 음식들의 재료를 기반으로 추천해드려요')
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
-    # ----- 나중에 모델 아웃풋 리스트 들어갈 곳 ----- #
-    thumbnail_ids = [6891816, 6843136, 7002443, 6996297, 6885909,
-                     6915088, 6897374, 6933760, 6846168, 6881099]
-    # --------------------------------------- #
+    display_thumbnails(tfidf_recommend_list, favorite_food_list, 'tfidf')
+    # --------------------------------------------- #
+
     
-    display_thumbnails(thumbnail_ids, favorite_food_list, 'test')
+    # # ------------------ test code ------------------ #
+    # st.subheader('Test 고정값')
+    # st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
+    # # ----- 나중에 모델 아웃풋 리스트 들어갈 곳 ----- #
+    # thumbnail_ids = [6891816, 6843136, 7002443, 6996297, 6885909,
+    #                  6915088, 6897374, 6933760, 6846168, 6881099]
+    # display_thumbnails(thumbnail_ids, favorite_food_list, 'test')
+    # # ------------------------------------------------ #
+    
           
 
 def display_thumbnails(thumbnail_ids, favorite_food_list, unique_str):
