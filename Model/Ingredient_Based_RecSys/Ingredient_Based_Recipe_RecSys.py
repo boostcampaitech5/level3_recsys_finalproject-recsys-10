@@ -47,9 +47,11 @@ def get_top_similar_recipes(query_vector, recipe_dict, top_k=10):
     return top_similar_recipes
 
 
-def initialize_vector(ingresync_recipe_path, cate_recipe_path, save_pickle_path):
+def initialize_vector(ingresync_recipe_path, cate_recipe_path, pickle_path):
     ingresync_recipe = pd.read_csv(ingresync_recipe_path)
     cate_recipe = pd.read_csv(cate_recipe_path)
+    save_pickle_path = os.path.join(pickle_path, 'Ingredient_Recsys_pkl.pkl')
+
 
     ingresync_recipe['ingredients'] = ingresync_recipe['ingredients'].apply(eval)
     ingresync_recipe['ingredient_quantity'] = ingresync_recipe['ingredient_quantity'].apply(eval)
