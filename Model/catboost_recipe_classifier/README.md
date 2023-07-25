@@ -47,6 +47,16 @@ PyYAML
 
 ## Evaluation Results
 
+### Columns Explanation:
+> - **Top K:** The number of top predictions considered in the evaluation.
+> - **Output Unique:** The number of unique outputs produced by the model.
+> - **Origin Unique:** The number of classes in the model.
+> - **Correct Predictions:** The number of predictions that match the ground truth (correct predictions).
+> - **Incorrect Predictions:** The number of predictions that do not match the ground truth (incorrect predictions).
+> - **Accuracy:** The percentage of correct predictions over the total number of predictions for each "Top K" scenario.
+> - **% Change in Accuracy:** The percentage change in accuracy compared to the previous "Top K" scenario, indicating the model's performance improvement with more predictions considered.
+
+
 ### \- Top 1 ~ 5
 | Top K | Output Unique | Origin Unique | Correct Predictions | Incorrect Predictions | Accuracy | % Change in Accuracy |
 |-------|---------------|---------------|--------------------|----------------------|----------|---------------------|
