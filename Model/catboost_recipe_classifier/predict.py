@@ -78,12 +78,12 @@ def map_labels(classes: list, top_k_classes: list) -> list:
     return result
 
 ## main predict code
-def predict_main(X_test: list) -> list[int]:
+def predict_main(input_list: list) -> list[int]:
     """
     The predict_main function to tie all the steps together.
 
     Parameters:
-    X_test (list): The user input data for which predictions are to be made.
+    input_list (list): The user input data for which predictions are to be made.
 
     Returns:
     top_k_classes (list[int]): The top k classes predicted by the model.
