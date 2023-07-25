@@ -58,6 +58,25 @@ def get_top_k_classes(probabilities: DataFrame, k: int) -> List[List[int]]:
     top_k_classes = probabilities.argsort(axis=1)[:, -k:].tolist()
     return top_k_classes
 
+def map_labels(classes: list, top_k_classes: list) -> list:
+    """
+    Maps the top k class indices to their corresponding labels.
+
+    Parameters:
+    classes (list): The class labels in the order they were trained on.
+    top_k_classes (list): The top k classes predicted by the model.
+
+    Returns:
+    result (list): The top k classes mapped to their original labels.
+    """
+    # Create a mapping from index to class label
+    label_mapping = {idx: label for idx, label in enumerate(classes)}
+
+    # Map the top k classes to their original labels
+    result = [label_mapping[label] for label in top_k_classes]
+
+    return result
+
 ## main predict code
 def predict_main(X_test: list) -> list[int]:
     """
@@ -89,6 +108,9 @@ def predict_main(X_test: list) -> list[int]:
 
     # Get the top k classes based on the predicted probabilities
     top_k_classes = get_top_k_classes(probabilities, TOP_K)
+
+    # Map the top k classes to their original labels
+    top_k_classes = map_labels(loaded_model.classes_, top_k_classes)
 
     # Return the top k classes
     return top_k_classes
