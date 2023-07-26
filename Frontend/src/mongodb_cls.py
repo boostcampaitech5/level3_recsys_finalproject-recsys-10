@@ -176,3 +176,9 @@ class MongoDB_cls:
         user_data["favorite_category"] = str(list(result))
         filter = {"username": username}
         collection.replace_one(filter, user_data)
+
+    def load_image_link(self, recipeid:int):
+        collection = self.get_collection('recipe_app_db', 'image_thumb_link')
+        recipie_list = collection.find_one({"Recipeid": recipeid})
+        result = ast.literal_eval(recipie_list["Process_img"])
+        return result
