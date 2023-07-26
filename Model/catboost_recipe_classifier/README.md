@@ -45,7 +45,16 @@ PyYAML
 ```
 
 
-## Evaluation Results
+## - Train Dataset:
+> userdata + recipeid -> userdata + category data [one hot]
+```
+Train Dataset example:
+recipeid,   0,   1,   2,   3, ... ,  55,  56,  57,  58,  59,  60
+6885928,  0.0, 0.0, 0.0, 0.0, ... , 1.0, 0.0, 0.0, 0.0, 0.0, 0.0
+6892249,  0.0, 0.0, 0.0, 0.5, ... , 0.5, 0.0, 0.0, 0.0, 0.0, 0.0
+```
+
+## - Evaluation Results
 
 ### Metrics
 > 1. For each prediction in the "top k list":  
