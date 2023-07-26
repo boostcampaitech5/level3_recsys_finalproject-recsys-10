@@ -3,8 +3,13 @@ from typing import List
 from fastapi.encoders import jsonable_encoder
 from app.models import *
 from app.models import mongodb
+from app.prediction import *
+import ast
+import os
 
 router = APIRouter()
+currpath = os.getcwd()
+path = os.path.join(currpath, "app/prediction/data")
 
 @router.get("/", response_model=Response)
 async def get_path():
@@ -87,3 +92,32 @@ async def retrieve_thumbnail(id: str) :
         return recipe["thumbnail_link"]
     
     return "No such recipe"
+
+@router.post("/predict/bm25", response_model=Response)
+async def predict_by_bm25(ingre_list):
+    result = await predict_bm25(ingre_list)
+    return {
+        "status_code": 200,
+        "response_type": "success",
+        "description": "Successfully predicted by bm25 similarity",
+        "data": result      
+    }
+
+
+async def predict_bm25(ingre_list : str):
+    input_list = ast.literal_eval(ingre_list)
+    return bm25_recipe(path, input_list)
+
+@router.post("/predict/jaccard", response_model=Response)
+async def predict_by_jaccard(ingre_list):
+    result = await predict_jaccard(ingre_list)
+    return {
+        "status_code": 200,
+        "response_type": "success",
+        "description": "Successfully predicted by jaccard similariy",
+        "data": result      
+    }
+
+async def predict_jaccard(ingre_list : str):
+    input_list = ast.literal_eval(ingre_list)
+    return jaccard_similar_recipe(path, input_list)
