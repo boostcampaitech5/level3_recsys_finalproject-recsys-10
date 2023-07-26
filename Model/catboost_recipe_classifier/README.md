@@ -48,7 +48,12 @@ PyYAML
 ## Evaluation Results
 
 ### Metrics
-
+> 1. For each prediction in the "top k list":  
+>       - If the target is in the "top k list", increment "Correct Predictions" by 1.  
+>       - If the target is not in the "top k list", increment "Incorrect Predictions" by 1.
+>
+> 2. Accuracy Formula:
+> $$\text{Accuracy} = \frac{\text{Correct Predictions}}{\text{Correct Predictions + Incorrect Predictions}} \times 100$$
 
 
 ### Columns Explanation:
