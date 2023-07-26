@@ -6,6 +6,7 @@ from streamlit_extras.switch_page_button import switch_page
 
 from src.mongodb_cls import MongoDB_cls
 from src.thumbnail_decoder import thumbnail_decoder
+from src.thumbnail_decoder import image_from_url
 
 
 def recipe_info():
@@ -46,7 +47,25 @@ def recipe_info():
     ingredient_data1 = {"재료": ingredients_list[:half_length], "용량": ingredient_quantity_list[:half_length]}
     ingredient_data2 = {"재료": ingredients_list[half_length:], "용량": ingredient_quantity_list[half_length:]}
 
+    ## type 1 UI
+    # st.header(':notebook_with_decorative_cover: '+title)
+    # st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
+    # cols = st.columns([1, 2])
+    # with cols[0]:
+    #     st.image(thumbnail, use_column_width=True)
+    # with cols[1]:
+    #     st.subheader('[재료]')
+    #     ingre_cols = st.columns(2)
+    #     with ingre_cols[0]:
+    #         st.dataframe(ingredient_data1, hide_index=True, use_container_width=True)
+    #     with ingre_cols[1]:
+    #         st.dataframe(ingredient_data2, hide_index=True, use_container_width=True)
+    #     st.subheader(f'[조리 순서]')
+    #     for index, process_string in enumerate(process_list):
+    #         st.info(f'{index + 1}. {process_string}')
+    # st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
 
+    # type2 UI
     st.header(':notebook_with_decorative_cover: '+title)
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
     cols = st.columns([1, 2])
@@ -59,8 +78,19 @@ def recipe_info():
             st.dataframe(ingredient_data1, hide_index=True, use_container_width=True)
         with ingre_cols[1]:
             st.dataframe(ingredient_data2, hide_index=True, use_container_width=True)
-        st.subheader(f'[조리 순서]')
-        for index, process_string in enumerate(process_list):
+
+    st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
+    st.subheader(f'[조리 순서]')
+    recipe_thumb_list = mongodb.load_image_link(recipe_id)
+    if len(recipe_thumb_list) == len(process_list):
+        for index, (image_link, process_string) in enumerate(zip(recipe_thumb_list, process_list)):
+            cols = st.columns([1, 2])
+            with cols[0]:
+                st.image(image_from_url(image_link), use_column_width=True)
+            with cols[1]:
+                st.info(f'{index + 1}. {process_string}')
+    else:
+        for index, (image_link, process_string) in enumerate(zip(recipe_thumb_list, process_list)):
             st.info(f'{index + 1}. {process_string}')
     st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
 
