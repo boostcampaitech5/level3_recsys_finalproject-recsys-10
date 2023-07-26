@@ -1,4 +1,5 @@
 import base64
+import requests
 from io import BytesIO
 from PIL import Image
 
@@ -20,3 +21,14 @@ def thumbnail_decoder(image_data):
     except Exception as e:
         # Handle any exceptions that might occur during decoding
         raise ValueError(f"Error decoding image data: {e}")
+    
+    
+def image_from_url(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        
+        image = Image.open(BytesIO(response.content))
+        return image
+    except:
+        pass
