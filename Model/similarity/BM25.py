@@ -9,7 +9,7 @@ def bm25_recipe(path,user_ingre):
     with open(bm25_path, 'rb') as bm25result_file:
         bm25 = pickle.load(bm25result_file)
     
-    return bm25.get_top_n(user_ingre, df['recipeid'], n=10)
+    return bm25.get_top_n(user_ingre, df['recipeid'], n=20)
 
 if __name__=="__main__":
     """
