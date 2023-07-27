@@ -10,7 +10,7 @@
 
 > 🥕 **오늘의 레시피**는 개인 맞춤형 레시피 추천 서비스입니다
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/f885e46d-f9a5-4d66-8d4f-89fe32c8edbf)
+
 
 ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/51400f78-73a4-4c01-a50e-64db4224d25b)
 
