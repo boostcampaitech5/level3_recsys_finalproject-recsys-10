@@ -30,7 +30,8 @@ def register(username, password, thumbnail_ids, check_list) -> bool:
         "username": username,
         "password": password,
         "favorite_category": str(cate_result),
-        "favorite_food": str(result)
+        "favorite_food": str(result),
+        "gcn_list": str([])
     }
     collection.insert_one(user)
     st.success("회원가입이 완료되었습니다.")

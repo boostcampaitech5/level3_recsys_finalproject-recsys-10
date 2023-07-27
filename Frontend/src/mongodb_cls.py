@@ -182,3 +182,11 @@ class MongoDB_cls:
         recipie_list = collection.find_one({"Recipeid": recipeid})
         result = ast.literal_eval(recipie_list["Process_img"])
         return result
+    
+
+    def load_UltraGCN_list(self, username: str):
+        collection = self.get_collection('recipe_app_db', 'user_login_db')
+        user = collection.find_one({"username": username})
+        favorite_food_list = user['gcn_list']
+        favorite_food_list = ast.literal_eval(favorite_food_list)
+        return favorite_food_list

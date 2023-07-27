@@ -112,6 +112,11 @@ def main():
     display_thumbnails(tfidf_recommend_list, favorite_food_list, 'tfidf')
     # --------------------------------------------- #
 
+    # -------------- ultra_GCN model -------------- #
+    st.subheader('🌕 취향이 비슷한 다른 사람들은 어떤것을 좋아하는지 알려드려요')
+    st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
+    ultragcn_recommend_list = mongodb.load_UltraGCN_list(st.session_state.key)
+    display_thumbnails(ultragcn_recommend_list, favorite_food_list, 'ultragcn')
     
     # # ------------------ test code ------------------ #
     # st.subheader('Test 고정값')
