@@ -10,7 +10,7 @@ with open(os.path.join(os.getcwd(), 'style.css')) as f:
     st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 def bookmark_page():
-    st.session_state.load_recipe_info_nav_main = False
+    st.session_state.load_recipe_info_nav_main = 1
     mongodb = MongoDB_cls()
     favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
     # favorite_food_list = ast.literal_eval(favorite_food_list)
