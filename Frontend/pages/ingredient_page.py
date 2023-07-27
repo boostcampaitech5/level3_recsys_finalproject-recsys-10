@@ -46,7 +46,7 @@ def ingredient_main():
         st.session_state.options = []
 
     # Multiselect to select ingredients from loaded_model
-    options = st.multiselect('냉장고에 있는 재료들을 입력해주세요', loaded_model)
+    options = st.multiselect('냉장고에 있는 재료들을 입력해주세요', loaded_model, st.session_state.options)
 
     # Update the options in session state with the selected ingredients
     st.session_state.options = options
@@ -74,12 +74,13 @@ def ingredient_main():
         }
         response_bm25 = requests.post(url_bm25, params=params, json=payload)
         # POST request
-        recommend_list_bm25= response_bm25.json()['data'][:-5]
-        st.subheader('🌕 좋아하는 음식들의 카테고리 상호작용 데이터로 추천해드려요')
+        recommend_list_bm25= response_bm25.json()['data']
+        # st.subheader('🌕 좋아하는 음식들의 카테고리 상호작용 데이터로 추천해드려요')
         st.markdown('<hr style="margin-top: 0.5rem; margin-bottom: 0.5rem;">', unsafe_allow_html=True)
         st.session_state.recommend_list_bm25 = recommend_list_bm25
-        display_thumbnails(recommend_list_bm25, favorite_food_list, 'bm25')
+        # display_thumbnails(recommend_list_bm25, favorite_food_list, 'bm25')
         # --------------------------------------------- #
+        
         url_bm25 = "http://101.101.219.32:30005/predict/jaccard"
         # Convert ingre_list to a JSON string
         ingre_list_json = str(options)
@@ -92,11 +93,22 @@ def ingredient_main():
         response_jaccard = requests.post(url_bm25, params=params_jaccard, json=payload_jaccard)
         # POST request
         try:
-            recommend_list_jaccard= response_jaccard.json()['data'][:5]
+            recommend_list_jaccard= response_jaccard.json()['data']
             st.session_state.recommend_list_jaccard = recommend_list_jaccard
-            display_thumbnails(recommend_list_jaccard, favorite_food_list, 'jaccard')
+            # display_thumbnails(recommend_list_jaccard, favorite_food_list, 'jaccard')
         except:
             pass
+        try:
+            li = []
+            li.extend(recommend_list_bm25)
+            li.extend(recommend_list_jaccard)
+        except:
+            li = []
+            li.extend(recommend_list_bm25)
+        li = list(set(li))[:10]
+        display_thumbnails(li, favorite_food_list, 'all')
+        
+    st.session_state.options = options
 
 def display_thumbnails(thumbnail_ids, favorite_food_list, unique_str):
     # mongodb = MongoDB_cls()
