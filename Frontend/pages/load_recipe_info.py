@@ -15,10 +15,12 @@ def recipe_info():
         
     want_to_back = st.button("< 뒤로 가기")
     if want_to_back:
-        if st.session_state.load_recipe_info_nav_main:
+        if st.session_state.load_recipe_info_nav_main == 0:
             switch_page("main")
-        else:
+        elif st.session_state.load_recipe_info_nav_main == 1:
             switch_page("book_mark")
+        else:
+            switch_page("ingredient_page")
         
     st.sidebar.title("오늘의 레시피")
     try:
