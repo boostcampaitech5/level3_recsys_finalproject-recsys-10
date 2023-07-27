@@ -188,5 +188,8 @@ class MongoDB_cls:
         collection = self.get_collection('recipe_app_db', 'user_login_db')
         user = collection.find_one({"username": username})
         favorite_food_list = user['gcn_list']
-        favorite_food_list = ast.literal_eval(favorite_food_list)
+        try:
+            favorite_food_list = ast.literal_eval(favorite_food_list)
+        except:
+            favorite_food_list = []
         return favorite_food_list
