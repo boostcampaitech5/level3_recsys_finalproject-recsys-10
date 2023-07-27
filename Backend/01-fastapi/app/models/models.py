@@ -23,7 +23,7 @@ class IngreSync(BaseModel):
     level : str
     ingredients : List[str] = Field(default_factory=list)
     ingredient_quantity : List[str]  = Field(default_factory=list)
-    process : list
+    process : List[str] = Field(default_factory=list)
     view :  int
 
 class Sequence(BaseModel):
@@ -42,6 +42,9 @@ class User_Login(BaseModel):
     _id : str =Field(default_factory=uuid.uuid4)
     username : str
     password : str
+    favorite_category : List[int]
+    favorite_food : List[int]
+    user_id : int
 
 
 class Response(BaseModel):
