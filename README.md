@@ -22,9 +22,20 @@
 
 ## 프로젝트 배경
 
+![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/4c9d8290-b6be-4d38-b1c5-c71ce344e30c)
+
+> 기존의 레시피 사이트들은 유저 조회수나 평점에 의한 단순 나열로 추천을 하여 개인화된 추천이 되지 않음  
+> ⇒ 사람들은 각자 입맛이 다르고 갖고 있는 재료가 다르므로 개인화된 레시피 추천 서비스의 필요성을 느낌
+
 
 ## 문제 정의
 
+1. 재료 취향 개인화 솔루션
+    1. 사용자가 갖고 있는 재료와 재료가 많이 겹치는 레시피를 추천해야 함
+    2. 사용자가 좋아하는 레시피의 재료가 유사한 레시피를 추천해야 함
+2. 입맛 개인화 솔루션
+    1. 사용자와 유사한 사용자들이 좋아하는 레시피를 추천해야 함
+    2. 사용자가 좋아하는 레시피의 카테고리에 속하는 레시피를 추천해야 함
 
 # 팀원 소개
 
@@ -69,7 +80,7 @@
 
 ## Model Result
 
-| ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/cb77871c-0cfe-4530-9636-504b338cc434) | ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/cb77871c-0cfe-4530-9636-504b338cc434) |
+| ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/cb77871c-0cfe-4530-9636-504b338cc434) | ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/a1f603b6-f2cb-4d9c-b7d4-1ad95cc01eef) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 
