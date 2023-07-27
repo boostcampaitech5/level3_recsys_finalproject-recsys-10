@@ -16,7 +16,7 @@ st.image(os.path.join(os.getcwd(), 'img/logo.png'), use_column_width=True)
 mongodb = MongoDB_cls()
 
 def main():
-    st.session_state.load_recipe_info_nav_main = True
+    st.session_state.load_recipe_info_nav_main = 0
     try:
         favorite_food_list = mongodb.load_user_favorite_food_list(st.session_state.key)
     except:
