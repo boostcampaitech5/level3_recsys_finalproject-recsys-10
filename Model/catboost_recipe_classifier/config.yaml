@@ -1,0 +1,23 @@
+# config.yaml
+
+## train.py
+# PATH
+data_dir: /opt/ml/recipe_project/model/data/
+train_data_file: train_data.csv
+model_dir: /opt/ml/recipe_project/model/model/
+model_save_file: catboost_model.bin
+
+# CatBoostClassifier Hyperparameter
+catboost_params:
+  task_type: GPU
+  iterations: 1500
+  random_seed: 42
+  learning_rate: 0.1
+  eval_metric: MultiClass
+  use_best_model: True
+  bagging_temperature: 1
+  border_count: 254
+
+
+## predict.py
+top_k: 10
