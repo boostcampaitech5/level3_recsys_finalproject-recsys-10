@@ -1,4 +1,4 @@
-
+![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/094b5ba2-f686-4c91-9363-5134523d31b2)
 
 
 
@@ -58,12 +58,12 @@
 
 | Model                      | link                                                         |
 | -------------------------- | ------------------------------------------------------------ |
-| kobert_rec                 | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/dev/Model/kobert_rec |
-| catboost_recipe_classifier | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/dev/Model/catboost_recipe_classifier |
-| TF-IDF                     | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/dev/Model/TF-IDF |
-| jaccard / bm25             | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/dev/Model/similarity |
-| Ingredient_Based_RecSys    | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/dev/Model/Ingredient_Based_RecSys |
-| UltraGCN                   | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/dev/Model/UltraGCN |
+| kobert_rec                 | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/main/Model/kobert_rec |
+| catboost_recipe_classifier | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/main/Model/catboost_recipe_classifier |
+| TF-IDF                     | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/main/Model/TF-IDF |
+| jaccard / bm25             | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/main/Model/similarity |
+| Ingredient_Based_RecSys    | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/main/Model/Ingredient_Based_RecSys |
+| UltraGCN                   | https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/tree/main/Model/UltraGCN |
 
 
 
