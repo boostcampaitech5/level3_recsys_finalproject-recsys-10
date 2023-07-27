@@ -5,6 +5,8 @@ def jaccard_similarity(x, y):
 
     intersection_cardinality = len(set.intersection(*[set(x), set(y)]))
     union_cardinality = len(set.union(*[set(x), set(y)]))
+    if union_cardinality ==0:
+        return 0
 
     return intersection_cardinality / float(union_cardinality)
 
@@ -13,7 +15,7 @@ def jaccard_similar_recipe(path,user_ingre):
     df = get_recipe_dataset(path)
     recommend = df['ingredients'].apply(lambda x: jaccard_similarity(x,user_ingre)).sort_values(ascending=False)
     
-    return df.iloc[recommend.index]['recipeid'].tolist()[:10] # 자카드 유사도가 높은 상위 10개 레시피아이디 추천
+    return df.iloc[recommend.index]['recipeid'].tolist()[:20] # 자카드 유사도가 높은 상위 10개 레시피아이디 추천
 
 if __name__=="__main__":
     """
