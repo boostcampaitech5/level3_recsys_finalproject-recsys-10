@@ -1,4 +1,4 @@
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/094b5ba2-f686-4c91-9363-5134523d31b2)
+
 
 
 
