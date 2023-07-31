@@ -2,7 +2,7 @@
 
 
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/7da6cbff-5478-4dfe-b1d0-b4dc5a28bd30)
+![image](/README_files/img/01_main_logo.png)
 
 
 
@@ -12,17 +12,21 @@
 
 
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/51400f78-73a4-4c01-a50e-64db4224d25b)
+![image](/README_files/img/02_오늘의레시피_main.png)
 
-## 서비스 링크
+## Link
 
-> 오늘의 레시피 - [http://115.85.182.72:30005/]( http://115.85.182.72:30005/)
+> 오늘의 레시피 - [http://115.85.182.72:30005/](http://115.85.182.72:30005/)
 > 
 > Github -  [https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/)
+>
+> 발표자료 - [link](/README_files/[ppt]%20오늘의%20레시피_I-Five.pdf)
+>
+> WrapUp report - [link](/README_files/Recsys-10%20|%20[오늘의%20레시피]%20개인화%20레시피%20추천%20서비스%20|%20WrapUp%20report.pdf)
 
 ## 프로젝트 배경
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/4c9d8290-b6be-4d38-b1c5-c71ce344e30c)
+![image](/README_files/img/03_프로젝트배경.png)
 
 > 기존의 레시피 사이트들은 유저 조회수나 평점에 의한 단순 나열로 추천을 하여 개인화된 추천이 되지 않음  
 > ⇒ 사람들은 각자 입맛이 다르고 갖고 있는 재료가 다르므로 개인화된 레시피 추천 서비스의 필요성을 느낌
@@ -48,22 +52,22 @@
 
 ## Time Line
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/d5c865bf-b1c9-4a80-b3e7-4a04d9518926)
+![image](/README_files/img/04_TimeLine.png)
 
 
 
 ## 프로젝트 요구사항 관리
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/54c2a626-120b-47e9-a9a6-e617e5521ce7)
+![image](/README_files/img/05_프로젝트요구사항.png)
 
 
 
 ## Architecture
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/970b9983-de01-47ac-800d-fc0d58be3f9e)
+![image](/README_files/img/06_Architecture.png)
 
 ## User Flow
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/efa715ec-e72b-43fb-aa8b-f52c8e083b05)
+![image](/README_files/img/07_UserFlow.png)
 
 ## Model
 
@@ -80,14 +84,14 @@
 
 ## Model Result
 
-| ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/cb77871c-0cfe-4530-9636-504b338cc434) | ![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/a1f603b6-f2cb-4d9c-b7d4-1ad95cc01eef) |
+| ![image](/README_files/img/08_modelresult_1.png) | ![image](/README_files/img/08_modelresult_2.png) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
 
 
 ## DB Diagram
 
-![image](https://github.com/boostcampaitech5/level3_recsys_finalproject-recsys-10/assets/60868825/30596c0c-d436-4058-918d-f69b1f4096ac)
+![image](/README_files/img/09_dbdiagram.png)
 
 
 
