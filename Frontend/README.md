@@ -12,13 +12,22 @@ streamlit run --server.port <port_number> streamlit_app.py
 ```
 .
 |-- README.md
+|-- img
+|   `-- logo.png
 |-- pages
+|   |-- book_mark.py
+|   |-- book_mark_reset.py
+|   |-- ingredient_page.py
+|   |-- ingredient_page_reset.py
+|   |-- load_recipe_info.py
 |   |-- login.py
 |   |-- main.py
+|   |-- main_reset.py
 |   `-- register.py
 |-- requirements.txt
 |-- src
 |   |-- mongodb_cls.py
+|   |-- register_page.py
 |   `-- thumbnail_decoder.py
 |-- streamlit_app.py
 `-- style.css
